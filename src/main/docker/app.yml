@@ -1,0 +1,20 @@
+version: '2'
+services:
+    jhipstersampleapplicationelastic-app:
+        image: jhipstersampleapplicationelastic
+        environment:
+            - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://jhipstersampleapplicationelastic-mysql:3306/jhipstersampleapplicationelastic?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_JEST_URI=http://jhipstersampleapplicationelastic-elasticsearch:9200
+        ports:
+            - 8080:8080
+    jhipstersampleapplicationelastic-mysql:
+        extends:
+            file: mysql.yml
+            service: jhipstersampleapplicationelastic-mysql
+    jhipstersampleapplicationelastic-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: jhipstersampleapplicationelastic-elasticsearch
